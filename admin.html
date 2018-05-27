@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>vue-chat</title>
+    <title>webim后台</title>
     <style>
         * {
             box-sizing: border-box;
@@ -19,9 +19,9 @@
             padding: 0;
         }
         body {
-            color: #4d4d4d;
+            color: #000000;
             font: 14px/1.4em 'Helvetica Neue', Helvetica, 'Microsoft Yahei', Arial, sans-serif;
-            background: #f5f5f5 url('dist/images/bg.jpg') no-repeat center;
+            background: #f5f5f5 url('dist/images/adminBG.jpg') no-repeat center;
             background-size: cover;
             font-smoothing: antialiased;
         }
@@ -45,12 +45,12 @@
             font-size: 14px;
         }
     </style>
-  </head> 
+  </head>
   <body>
     <app></app> 
     <script src="dist/build.js"></script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="myjs.js"></script>
+    <script src="adminjs.js"></script>
     <script>
         $("#text").keyup(function(e){  
            if (e.keyCode === 13){
@@ -59,19 +59,24 @@
              else
               webim.sendMSG($("#text").val());
            }
-        });
+        });         
+        
         $(function(){
           $("#text").parent().prepend($('<button id="send" class="btn btn_send">发送</button>'));
+          $("#text").parent().prepend($('<button id="autoReply" class="btn btn_send">自动回复</button>'));
+          $("#text").parent().prepend($('<button id="ip_ban" class="btn btn_send">禁IP</button>'));
+          $("#text").parent().prepend($('<button id="delSess" class="btn btn_send">删除当前会话</button>'));
           $("#text").parent().prepend($('<button class="btn btn_send">图片</button>'));
           $("#text").parent().prepend($('<button class="btn btn_send">表情</button>'));
           $("#send").click(function(){webim.sendMSG($("#text").val());});
-          if (webim.sessions.find(item=>item.id == -123321).messages.length==0)
-            webim.showMSG(-123321,msg77,Number(new Date())/1000,false);
+          $("#delSess").click(function(){webim.removeSessID();});
+          $("#ip_ban").click(function(){window.open("./ip_ban.html");});
+          $("#autoReply").click(function(){window.open("./autoReply.html");});
         });
+        
         setInterval("webim.recvMSG()",1000);
-    </script>
-    <script>
-       msg77="微鱼工作室 三网基站一手定位 承接软件定制 网站开发入";
     </script>
   </body>
 </html>
+
+ 

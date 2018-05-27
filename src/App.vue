@@ -33,7 +33,7 @@ export default {
 <style lang="less" scoped>
 #app {
     margin: 20px auto;
-    width: 800px;
+    width: 1000px;
     height: 600px;
 
     overflow: hidden;
@@ -44,7 +44,7 @@ export default {
     }
     .sidebar {
         float: left;
-        width: 200px;
+        width: 300px;
         color: #f4f4f4;
         background-color: #2e3238;
     }

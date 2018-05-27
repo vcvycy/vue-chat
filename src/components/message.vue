@@ -12,7 +12,7 @@ export default {
             if (typeof date === 'string') {
                 date = new Date(date);
             }
-            return date.getHours() + ':' + date.getMinutes();
+            return date.getMonth()+1+"/"+date.getUTCDate()+"  "+date.getHours() + ':' + date.getMinutes()+":"+date.getSeconds();
         }
     },
     directives: {

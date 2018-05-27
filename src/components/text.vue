@@ -12,9 +12,9 @@ export default {
     },
     methods: {
         onKeyup (e) {
-            if (e.ctrlKey && e.keyCode === 13 && this.content.length) {
+            if (false && e.ctrlKey && e.keyCode === 13 && this.content.length) { 
                 this.sendMessage(this.content);
-                this.content = '';
+                this.content = ''; 
             }
         }
     }
@@ -23,7 +23,7 @@ export default {
 
 <template>
 <div class="text">
-    <textarea placeholder="按 Ctrl + Enter 发送" v-model="content" @keyup="onKeyup"></textarea>
+    <textarea id="text" placeholder="按 Enter 发送;Ctrl+Enter换行" v-model="content" @keyup="onKeyup"></textarea>
 </div>
 </template>
 
