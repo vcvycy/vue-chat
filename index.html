@@ -62,16 +62,47 @@
         });
         $(function(){
           $("#text").parent().prepend($('<button id="send" class="btn btn_send">发送</button>'));
-          $("#text").parent().prepend($('<button class="btn btn_send">图片</button>'));
+          $("#text").parent().prepend($('<button id="imgbtn" class="btn btn_send">发送图片</button>'));
           $("#text").parent().prepend($('<button class="btn btn_send">表情</button>'));
           $("#send").click(function(){webim.sendMSG($("#text").val());});
           if (webim.sessions.find(item=>item.id == -123321).messages.length==0)
             webim.showMSG(-123321,msg77,Number(new Date())/1000,false);
+          //广告
+          $('<br><br><img style="" src="dist/images/7.png">').appendTo($(".sidebar"));
+           //图片
+           
+           $("#imgbtn").click(function(){$("#file").click();});
+           
+           $("#file").change(function () {  
+            var formData = new FormData($('#uploadForm')[0]);
+            $.ajax({  
+                type: 'post',  
+                url: "upload/upload.php",  
+                data: formData,  
+                cache: false,  
+                processData: false,  
+                contentType: false,  
+            }).success(function (data) {
+                obj=JSON.parse(data);
+                if (obj.error=="0"){
+                  url="upload/uploads/"+obj.name;
+                  webim.sendMSG("<a href="+url+" target=_blank><img style='max-width:400px;' src="+url+" /></a>");
+                }else
+                  alert(obj.error);                
+            }).error(function () {  
+                alert("上传失败");  
+            });  
+           }); 
+           
         });
         setInterval("webim.recvMSG()",1000);
     </script>
     <script>
-       msg77="微鱼工作室 三网基站一手定位 承接软件定制 网站开发入";
+       msg77="【你可以在这里问我问题】";
     </script>
+    <!--图片上传-->
+    <form id="uploadForm" enctype="multipart/form-data">  
+    <input id="file" type="file" name="file"></input>
+    </form> 
   </body>
 </html>
