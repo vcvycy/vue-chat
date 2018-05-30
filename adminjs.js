@@ -26,6 +26,11 @@ webim.initFromLS=function(){  //init from local storage
 webim.storeToLS=function(){
    localStorage.setItem('vue-chat-session', JSON.stringify(webim.sessions));
 }
+
+webim.play=function(id){
+   audio = document.getElementById(id);
+   audio.play();
+}
 webim.removeSessID=function(id=null){
      if (id==null) id=window.cjf.store.state.currentSessionId;
      if (id==-123321) return; 
@@ -66,6 +71,7 @@ webim.sendMSG=function(content,self=true,to=null){
         if (data.status==0) {
             webim.showMSG(to,content,parseInt($.now()/1000),true);
             $("#text").val("");
+            webim.play("audio_send");
         }else 
             alert("发送失败:"+data.data);
       }
@@ -102,11 +108,13 @@ webim.recvMSG=function(){  //接受从别人发过来的
      },
      success:function(data){
        if (data.status==0){ 
+           if (data.data.length) webim.play("audio_recv");
            for(i=0;i<data.data.length;i++){
              item=data.data[i];  
              webim.showMSG(item[1],item[6],item[4],false,item[3],item[7]); //1:fromId,6:content,3:ip,7:ip_city 
              webim.autoReply(item[1],item[6]);
            }
+           
        }else
            alert("无法读取消息");
      }

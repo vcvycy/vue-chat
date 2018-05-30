@@ -19,6 +19,11 @@ webim.initFromLS=function(){  //init from local storage
 webim.init=function(){
    now=new Date(); 
 };
+
+webim.play=function(id){
+   audio = document.getElementById(id);
+   audio.play();
+}
 webim.showMSG=function(toID,content,time,self){  
    let sess=this.sessions.find(item=>item.id == toID);  
    if (sess == undefined){ 
@@ -57,6 +62,7 @@ webim.sendMSG=function(content,self=true){
                 if (data.status==0) {
                     webim.showMSG(window.cjf.store.state.currentSessionId,content,parseInt($.now()/1000),true);
                     $("#text").val("");
+                    webim.play("audio_send");
                 }else 
                     alert("发送失败:"+data.data);
               }
@@ -72,8 +78,9 @@ webim.recvMSG=function(){  //接受从别人发过来的
        "action":"query",
        "id":this.me.id
      },
-     success:function(data){
+     success:function(data){ 
        if (data.status==0){ 
+           if (data.data.length) webim.play("audio_recv");
            for(i=0;i<data.data.length;i++){
              item=data.data[i]; 
              webim.showMSG(item[1],item[6],item[4],false); 
