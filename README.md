@@ -1,18 +1,7 @@
-# Chat by Vue + Webpack
-
-[Live demo](http://coffcer.github.io/vue-chat/)
-
-<img width="600" src="https://github.com/Coffcer/vue-chat/blob/master/intro.jpg">
-
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-```
+# 修改成客服之类的东西；添加以下功能：
+* 表情
+* ip屏蔽
+* 自动回复
+* 发送图片
+* 发送、接受自动播放声音提示
+* 添加后台：Php+mysql，只有一个表，见php/webim.sql
