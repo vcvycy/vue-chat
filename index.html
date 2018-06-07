@@ -49,7 +49,7 @@
   <body>
     <app></app> 
     <script src="dist/build.js"></script>
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="./js/jquery.min.js"></script>
     <script src="myjs.js"></script>
     <script>
         $("#text").keyup(function(e){  
@@ -60,10 +60,29 @@
               webim.sendMSG($("#text").val());
            }
         });
+		  var getBQ=function(){
+    		  src=localStorage.getItem("bq");
+			  if (src!=null &&src!=""){
+			    
+			    localStorage.setItem("bq","");
+				webim.sendMSG("<img src="+src+"></img>");
+              }			  
+			  setTimeout("getBQ()",100);
+		  }
         $(function(){
           $("#text").parent().prepend($('<button id="send" class="btn btn_send">发送</button>'));
           $("#text").parent().prepend($('<button id="imgbtn" class="btn btn_send">发送图片</button>'));
-          $("#text").parent().prepend($('<button class="btn btn_send">表情</button>'));
+          //表情
+		  $("#text").parent().prepend($('<button id="btn_bq" class="btn btn_send">表情</button>'));
+		  $("#bq").appendTo($("#btn_bq").parent()); 
+		  $("#btn_bq").click(function(){ 
+		    val="none";
+			if ($("#bq").css("display")==val) val="block"; 
+		    $("#bq").css("display",val);
+		  });
+		  getBQ();
+		  
+		  //
           $("#send").click(function(){webim.sendMSG($("#text").val());});
           if (webim.sessions.find(item=>item.id == -123321).messages.length==0)
             webim.showMSG(-123321,msg77,Number(new Date())/1000,false);
@@ -110,5 +129,8 @@
     </audio>
     <audio id="audio_recv" src="./dist/sound/recv.mp3">   
     </audio>
+	<iframe id="bq" src="bq.html" style="display:none;position:absolute;bottom:200px;;width:419px;height:218px" 
+	   scrolling="no" frameborder="no" border="0" marginwidth="0" marginheight="0" allowtransparency="yes">
+	</iframe>
   </body>
 </html>

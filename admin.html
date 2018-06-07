@@ -49,7 +49,7 @@
   <body>
     <app></app> 
     <script src="dist/build.js"></script>
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="./js/jquery.min.js"></script>
     <script src="adminjs.js"></script>
     <script>
         $("#text").keyup(function(e){  
@@ -60,14 +60,31 @@
               webim.sendMSG($("#text").val());
            }
         });         
-        
+         var getBQ=function(){
+    		  src=localStorage.getItem("bq_admin");
+			  if (src!=null &&src!=""){
+			    
+			    localStorage.setItem("bq_admin","");
+				webim.sendMSG("<img src="+src+"></img>");
+              }			  
+			  setTimeout("getBQ()",100);
+		  }
         $(function(){
           $("#text").parent().prepend($('<button id="send" class="btn btn_send">发送</button>'));
           $("#text").parent().prepend($('<button id="autoReply" class="btn btn_send">自动回复</button>'));
           $("#text").parent().prepend($('<button id="ip_ban" class="btn btn_send">禁IP</button>'));
           $("#text").parent().prepend($('<button id="delSess" class="btn btn_send">删除当前会话</button>'));
           $("#text").parent().prepend($('<button id="imgbtn" class="btn btn_send">发送图片</button>'));
-          $("#text").parent().prepend($('<button class="btn btn_send">表情</button>'));
+         //表情
+		  $("#text").parent().prepend($('<button id="btn_bq" class="btn btn_send">表情</button>'));
+		  $("#bq").appendTo($("#btn_bq").parent()); 
+		  $("#btn_bq").click(function(){
+		    val="none";
+			if ($("#bq").css("display")==val) val="block"; 
+		    $("#bq").css("display",val);
+		  });
+		  getBQ();
+		  
           $("#send").click(function(){webim.sendMSG($("#text").val());});
           $("#delSess").click(function(){webim.removeSessID();});
           $("#ip_ban").click(function(){window.open("./ip_ban.html");});
@@ -111,6 +128,9 @@
     <audio id="audio_recv" src="./dist/sound/recv.mp3">   
     </audio> 
     </form> 
+	<iframe id="bq" src="bq_admin.html" style="display:none;position:absolute;bottom:200px;;width:419px;height:218px" 
+	   scrolling="no" frameborder="no" border="0" marginwidth="0" marginheight="0" allowtransparency="yes">
+	</iframe>
   </body>
 </html>
 

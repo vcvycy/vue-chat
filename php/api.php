@@ -1,7 +1,7 @@
 <?php
 $dbconf=array("host" => "localhost",
             "user" => "root",
-            "pass" => "youpass",
+            "pass" => "159357",
             "dbname"=>"webim");
 $s_conn=null;
 function mydie($status,$data){
